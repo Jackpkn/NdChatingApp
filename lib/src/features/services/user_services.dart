@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/auth/authmodel.dart';
- 
+
 FirebaseAuth auth = FirebaseAuth.instance;
 
 // for accessing cloud firestore database
@@ -90,7 +90,7 @@ class Services {
   }
 
   Future updateUserName({required String name, required String id}) async {
-   return firestore
+    return firestore
         .collection('USERS')
         .doc(user.uid)
         .collection('MY-USER')
