@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/auth/authmodel.dart';
-
+ 
 FirebaseAuth auth = FirebaseAuth.instance;
 
 // for accessing cloud firestore database

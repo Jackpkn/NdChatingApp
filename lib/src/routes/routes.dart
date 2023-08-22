@@ -7,6 +7,7 @@ Route<dynamic> onGeneratesRoutes(RouteSettings routeSettings) {
       return MaterialPageRoute(
         builder: (_) => const HomeScreen(),
       );
+
     default:
       return MaterialPageRoute(
         settings: routeSettings,

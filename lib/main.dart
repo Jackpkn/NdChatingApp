@@ -42,7 +42,7 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // routerConfig: goRouter,
-      
+
       onGenerateRoute: (settings) => onGeneratesRoutes(settings),
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -142,40 +142,60 @@ class LendingScreen extends StatefulWidget {
   State<LendingScreen> createState() => _LendingScreenState();
 }
 
-class _LendingScreenState extends State<LendingScreen> {
-// it's similar to splash screen
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Future.delayed(
-  //     const Duration(seconds: 4),
-  //   );
-  //   Navigator.pushAndRemoveUntil(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => const HomeScreen(),
-  //     ),
-  //     (route) => false,
-  //   );
-  // }
+class _LendingScreenState extends State<LendingScreen>
+    with SingleTickerProviderStateMixin {
+  late Animation animation, delayAnimation, muchDelayedAnimation;
+  late AnimationController animationController;
+  @override
+  void initState() {
+    //
+    super.initState();
+    animationController =
+        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+    animation = Tween(begin: -1.0, end: 1.0).animate(
+        CurvedAnimation(parent: animationController, curve: Curves.bounceOut));
+    delayAnimation = Tween(begin: -1.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(-0.5, 0.8, curve: Cubic(-1, 0, 0, 0)),
+      ),
+    );
+    muchDelayedAnimation = Tween(begin: -1.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.8, 1.0, curve: Cubic(-1, 0, 0, 0)),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'user.displayName.toString()',
-              style: TextStyle(
-                color: Colors.teal,
-                fontSize: 19,
-                fontWeight: FontWeight.bold,
-              ),
+    return Scaffold(
+      body: AnimatedBuilder(
+        animation: animationController,
+        builder: (context, child) {
+          return const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'user.displayName.toString()',
+                  style: TextStyle(
+                    color: Colors.teal,
+                    fontSize: 19,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:chatapplication/src/features/models/auth/authmodel.dart';
 import 'package:chatapplication/src/features/screens/chat/profile.dart';
+import 'package:chatapplication/src/features/screens/chat/widgets/sender_message_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -16,19 +19,20 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    
       backgroundColor: Colors.black87,
       body: SafeArea(
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(75.0),
+            preferredSize: const Size.fromHeight(60.0),
             child: AppBar(
               backgroundColor: const Color.fromARGB(255, 42, 27, 27),
               flexibleSpace: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(
-                    CupertinoIcons.back,
-                    size: 32,
+                  Icon(
+                    Platform.isIOS ? CupertinoIcons.back : Icons.arrow_back,
+                    size: 22,
                     color: Colors.white,
                   ),
                   InkWell(
@@ -44,12 +48,12 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: Row(
                       children: [
                         CircleAvatar(
-                          maxRadius: 28,
+                          maxRadius: 24,
                           foregroundImage:
                               NetworkImage(widget.user.image.toString()),
                         ),
                         const SizedBox(
-                          width: 10,
+                          width: 18,
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -64,8 +68,8 @@ class _ChatScreenState extends State<ChatScreen> {
                             ),
                             const Text(
                               'Online',
-                              style:
-                                  TextStyle(color: Colors.green, fontSize: 18),
+                              style: TextStyle(
+                                  color: Colors.green, fontSize: 12.3),
                             )
                           ],
                         ),
@@ -78,14 +82,14 @@ class _ChatScreenState extends State<ChatScreen> {
                           onPressed: () {},
                           icon: const Icon(
                             LineAwesomeIcons.video_1,
-                            size: 29,
+                            size: 23,
                             color: Colors.white,
                           )),
                       IconButton(
                         onPressed: () {},
                         icon: const Icon(
                           LineAwesomeIcons.phone,
-                          size: 29,
+                          size: 23,
                           color: Colors.white,
                         ),
                       )
@@ -105,55 +109,91 @@ class _ChatScreenState extends State<ChatScreen> {
           // ),
           body: Stack(
             children: [
-              // write side message from the server of the data
-             
+              ListView.builder(
+                  itemCount: 12,
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return const SenderMessageCard();
+                  }),
               Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8, bottom: 10),
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                    height: 64,
+                    height: 55,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(23),
                       color: const Color.fromARGB(255, 30, 48, 51),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.emoji_emotions,
-                              size: 34, color: Colors.white),
+                          onPressed: () {
+                            showModalBottomSheet(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 30, 48, 51),
+                              context: context,
+                              builder: (context) {
+                                return SizedBox(
+                                  height: 278,
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          icocreat(
+                                            Icons.headset,
+                                            Colors.white,
+                                            'Headset',
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          icon: const Icon(Icons.attachment_outlined,
+                              size: 34,
+                              color: Color.fromARGB(255, 193, 186, 186)),
                         ),
                         Flexible(
                           child: TextFormField(
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
-                            decoration: const InputDecoration(),
+                            decoration: const InputDecoration(
+                              labelText: 'Type something',
+                              enabledBorder: InputBorder.none,
+                            ),
                           ),
                         ),
                         IconButton(
                           onPressed: () {},
                           icon: const Icon(
-                            Icons.image,
+                            Icons.emoji_emotions_sharp,
                             size: 34,
-                            color: Colors.white,
+                            color: Color.fromARGB(255, 215, 207, 207),
                           ),
                         ),
                         const SizedBox(
                           width: 2,
                         ),
                         Container(
+                          height: 40,
+                          width: 40,
                           alignment: Alignment.center,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             // borderRadius: BorderRadius.circular(4),
-                            color: Colors.blue,
+                            color: Color.fromARGB(255, 33, 82, 122),
                           ),
                           child: IconButton(
                             onPressed: () {},
                             icon: const Icon(
                               Icons.send,
+                              size: 22,
                               color: Colors.white,
                             ),
                           ),
@@ -167,6 +207,31 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget icocreat(IconData icon, Color color, String text) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            CircleAvatar(
+              radius: 30,
+              child: Icon(
+                icon,
+                size: 27,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(
+              height: 3,
+            ),
+            Text(
+              text,
+            ),
+          ],
+        )
+      ],
     );
   }
 

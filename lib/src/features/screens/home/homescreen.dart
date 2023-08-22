@@ -38,6 +38,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: BottomNavigationBar(
+          useLegacyColorScheme: false,
           currentIndex: changeBottomIndex.currentIndex,
           selectedItemColor:
               changeBottomIndex.currentIndex == 2 ? Colors.orange : Colors.blue,
@@ -47,7 +48,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
           enableFeedback: false,
-          backgroundColor: Colors.transparent,
+          backgroundColor: const Color.fromARGB(115, 43, 18, 18),
           onTap: (int index) {
             ref.read(changeIndexNotifier).changeIndex(index);
             setState(() {

@@ -107,16 +107,7 @@ class AuthRepository {
     required BuildContext context,
   }) async {
     try {
-      await auth
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then(
-        (value) {
-          // Navigator.pushNamed(
-          //   context,
-          //   // HomePage.routeName,
-          // );
-        },
-      );
+      await auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       debugPrint(e.toString());
       SignUpWithEmailAndPasswordFailure.code(e.message.toString());

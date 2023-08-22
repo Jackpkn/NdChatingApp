@@ -1,3 +1,4 @@
+
 class Message {
   String? idFrom;
   String? idTo;
@@ -13,7 +14,10 @@ class Message {
   });
   Map<String, dynamic> toMap() => {
         'idFrom': 'idFrom',
-        
-        
+        'idTo': 'idTo',
+        'message': 'message',
+        'timestamp': 'timestamp',
+        'type': 'type',
       };
+      
 }

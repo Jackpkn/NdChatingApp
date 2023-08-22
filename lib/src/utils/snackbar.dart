@@ -70,7 +70,7 @@ showDeleteContactDialog({
           width: 200.0,
           height: 150.0,
           padding: const EdgeInsets.all(7),
-          decoration:   BoxDecoration(
+          decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(5),
             color: const Color.fromARGB(255, 42, 60, 64),
@@ -136,6 +136,147 @@ showDeleteContactDialog({
                       // color: Colors.green,
                       child: const Text(
                         'Delete chat',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+showDia({
+  required BuildContext context,
+  required VoidCallback onTapC,
+  required VoidCallback onTapD,
+  required String hintText,
+  required TextEditingController controller,
+}) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        contentPadding: const EdgeInsets.all(0.4),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        content: Container(
+          width: 200.0,
+          height: 150.0,
+          padding: const EdgeInsets.all(7),
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(2),
+            color: const Color.fromARGB(255, 42, 60, 64),
+            // borderRadius: BorderRadius.all(Radius.circular(32.0)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      maxLines: 2,
+                      controller: controller,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      onChanged: (value) {},
+                      decoration: InputDecoration(
+                        labelStyle: const TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.w300),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(3),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              width: 1),
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 234, 228, 227),
+                              width: 2),
+                        ),
+                        focusColor: Colors.white,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 2.0, horizontal: 10.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(2.0),
+                        ),
+                        fillColor: Colors.grey,
+                        hintText: hintText,
+                        hintStyle: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 2,
+                  ),
+                  Container(
+                    height: 47,
+                    width: 43,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(3),
+                        border: Border.all(width: 1, color: Colors.white)),
+                    child: const Icon(
+                      Icons.emoji_emotions_outlined,
+                      color: Colors.white,
+                    ),
+                  )
+                ],
+              ),
+              // TextFormInput(
+              //     hintText: 'hintText', labelText: 'Type', controller: controller),
+              Flexible(
+                flex: 1,
+                child: Container(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    onTap: onTapC,
+                    child: Container(
+                      height: 41,
+                      width: 95,
+                      alignment: Alignment.center,
+                      // color: Colors.green,F
+                      child: const Text(
+                        'Cancel',
+                        style: TextStyle(
+                          // fontSize: 23,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: onTapD,
+                    child: Container(
+                      height: 41,
+                      width: 95,
+                      alignment: Alignment.center,
+                      // color: Colors.green,
+                      child: const Text(
+                        'Save',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

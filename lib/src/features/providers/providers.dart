@@ -1,10 +1,9 @@
-
 import 'package:chatapplication/src/features/repository/auth/authontication_repo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
- 
+
 final loadingProvider = StateProvider<bool>((ref) => false);
 
 final authProviders = StateNotifierProvider<AuthNotifier, AuthState>(
@@ -12,9 +11,11 @@ final authProviders = StateNotifierProvider<AuthNotifier, AuthState>(
 );
 
 class AuthNotifier extends StateNotifier<AuthState> {
-  AuthNotifier() : super(AuthState());
+  AuthNotifier() : super(AuthState(isLoading: true));
   AuthRepository repository = AuthRepository(
-      auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance,);
+    auth: FirebaseAuth.instance,
+    firestore: FirebaseFirestore.instance,
+  );
   void login({
     required BuildContext context,
     required String email,
@@ -24,15 +25,17 @@ class AuthNotifier extends StateNotifier<AuthState> {
     try {
       repository.loginUser(
         email: email,
-        password: password, 
+        password: password,
         context: context,
       );
 
       // after login we can locally store the data in shredPreferences
+      // first perform the action  change the state for  loading
+      state = AuthState.loading();
 
       state = AuthState.authenticated();
+
       // Get.to(const HomePage());
-      
     } catch (e) {
       state = AuthState.error(Exception(e));
     }
@@ -64,7 +67,13 @@ class AuthState {
   factory AuthState.unauthenticated() => AuthState(isAuthenticated: false);
 }
 
- // bloc data domain layer from the server that will 
- // BlocProvider BlocProvider BlocListener BlocConsumer RepositoryProvider
+// bloc data domain layer from the server that will
+// BlocProvider BlocProvider BlocListener BlocConsumer RepositoryProvider
 
- // flutter firebase nodejs MONGODB DSA(C++) AI/ML => we have
+// flutter firebase nodejs MONGODB DSA(C++) AI/ML => we have
+@immutable // we cant create the instance of the abstract class
+abstract class AuthStateCheck {}
+
+class IsLoadingState extends AuthStateCheck {}
+class LoadedDataState extends AuthStateCheck{}
+ 

@@ -27,6 +27,16 @@ Future<XFile?> get imageFromCamera async {
   return pickImage;
 }
 
+Future<XFile?> get pickVideo async {
+  final ImagePicker picker = ImagePicker();
+  final XFile? pickImage = await picker.pickImage(
+    source: ImageSource.gallery,
+    imageQuality: 80,
+  );
+
+  return pickImage;
+}
+
 class ImageProvider extends ChangeNotifier {
   var image = '';
 
